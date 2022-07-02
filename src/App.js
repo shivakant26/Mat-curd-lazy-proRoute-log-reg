@@ -20,11 +20,9 @@ function App() {
           <Routes>
           <Route path='/' element={<Login/>} />
           <Route path='/register' element={<Register/>} />
+          <Route path="*" exact={true} element={<PageNotFound/>}/>
         </Routes>
         }
-        <Routes>
-        <Route path="*" exact={true} element={<PageNotFound/>}/>
-        </Routes>
         </Suspense>
       </Router>
     </div>
