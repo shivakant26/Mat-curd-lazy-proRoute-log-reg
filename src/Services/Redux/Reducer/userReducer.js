@@ -1,4 +1,4 @@
-import { LOGIN_SUCCESS, REGISTER_SUCCESS } from "../actionType";
+import { DELETE_SUCCESS, EDIT_SUCCESS, LOGIN_SUCCESS, REGISTER_SUCCESS, UPDATE_SUCCESS } from "../actionType";
 
 const initialState = {
   register_User: localStorage.getItem("registerUser")
@@ -9,6 +9,7 @@ const initialState = {
 const userReaducer = (state = initialState, action) => {
   console.log("action", action);
   switch (action.type) {
+    // Registration case
     case REGISTER_SUCCESS:
       var user = state.register_User;
         user.push(action.payload)
@@ -19,6 +20,7 @@ const userReaducer = (state = initialState, action) => {
         status: 201,
         message: "Register user Successfully",
       };
+      // login case
     case LOGIN_SUCCESS:
       var token, status, message;
       const reg_user_list = JSON.parse(localStorage.getItem("registerUser"));
@@ -36,6 +38,40 @@ const userReaducer = (state = initialState, action) => {
         token: token === token ? token : null,
         message: message === true ? "Login Successfull" : "Invalid Credential",
       };
+      // delete user case
+      case DELETE_SUCCESS : 
+      let userlist = JSON.parse(localStorage.getItem("registerUser"));
+      userlist.splice(action.payload,1);
+      localStorage.setItem("registerUser",JSON.stringify(userlist))
+      return{
+        ...state,
+        register_User: [...userlist],
+      }
+      // edit user case 
+      case EDIT_SUCCESS :
+        let all_Data = JSON.parse(localStorage.getItem("registerUser"));
+        let object = all_Data[action.payload]
+        return{
+          ...state,
+          isEdit:object,
+          id:action.payload 
+        }
+        // Update user case
+        case UPDATE_SUCCESS :
+          let Update_userlist = JSON.parse(localStorage.getItem("registerUser"));
+          let updatedObject = {
+            name:action.payload.name,
+            email:action.payload.email,
+            password:action.payload.password,
+            phone:action.payload.phone
+          }
+          Update_userlist.splice(action.id,1,updatedObject)
+          localStorage.setItem("registerUser",JSON.stringify(Update_userlist))
+          return{
+            ...state,
+            isEdit:"",
+            message:"Record Update Successfully"
+          }
     default:
       return state;
   }

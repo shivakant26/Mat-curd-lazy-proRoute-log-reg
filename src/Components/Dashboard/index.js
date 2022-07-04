@@ -5,13 +5,8 @@ import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
 import { Grid } from "@mui/material";
-import List from '@mui/material/List';
-import ListItem from '@mui/material/ListItem';
-import ListItemButton from '@mui/material/ListItemButton';
-import ListItemIcon from '@mui/material/ListItemIcon';
-import ListItemText from '@mui/material/ListItemText';
-import MailIcon from '@mui/icons-material/Mail';
-import { Outlet, useNavigate} from 'react-router-dom'
+import { Outlet, useNavigate } from 'react-router-dom'
+import Sidebar from "../Sidebar";
 const Dashboard = () => {
 const navigate = useNavigate();
 const Logout = () =>{
@@ -33,40 +28,7 @@ const Logout = () =>{
                 </AppBar>
                 <Grid container spacing={2}>
                     <Grid item xs={3}>
-                        <List>
-                            <ListItem>
-                                <ListItemButton>
-                                    <ListItemIcon>
-                                        <MailIcon />
-                                    </ListItemIcon>
-                                    <ListItemText primary="Dashboard" />
-                                </ListItemButton>
-                            </ListItem>
-                            <ListItem>
-                                <ListItemButton>
-                                    <ListItemIcon>
-                                        <MailIcon />
-                                    </ListItemIcon>
-                                    <ListItemText primary="Create" />
-                                </ListItemButton>
-                            </ListItem>
-                            <ListItem>
-                                <ListItemButton>
-                                    <ListItemIcon>
-                                        <MailIcon />
-                                    </ListItemIcon>
-                                    <ListItemText primary="Show" />
-                                </ListItemButton>
-                            </ListItem>
-                            <ListItem>
-                                <ListItemButton>
-                                    <ListItemIcon>
-                                        <MailIcon />
-                                    </ListItemIcon>
-                                    <ListItemText primary="Profile" />
-                                </ListItemButton>
-                            </ListItem>
-                        </List>
+                        <Sidebar />
                     </Grid>
                     <Grid item xs={9}>
                         <Outlet />

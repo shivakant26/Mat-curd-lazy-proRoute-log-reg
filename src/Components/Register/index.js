@@ -24,7 +24,6 @@ const Register = () => {
           return obj.email === data.email
         }) != -1;
     if (isExist) {
-        debugger;
       alert("Email Already be taken")
     } else {
         dispatch(RegsiterUser(data))

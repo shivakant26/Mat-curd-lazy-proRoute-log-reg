@@ -1,6 +1,10 @@
 .App {
   text-align: center;
 }
+a{
+    text-decoration: none;
+    color: black;
+}
 .form-field{
   margin-bottom: 20px;
   position: relative;
@@ -35,4 +39,42 @@
     left: 96px;
     font-size: 14px;
     color: red;
+}
+.page-not-found{
+  margin-top: 150px;
+}
+.page-not-found h2{
+  width: 65px;
+  height: 37px;
+  margin: 0 auto;
+  border: 2px solid red;
+  color: red;
+}
+.page-not-found h5{
+  font-size: 32px;
+  margin: 0;
+  font-weight: 300;
+  color: gray;
+  padding: 18px 0px;
+}
+.page-not-found p{
+  font-size: 15px;
+  color: gray;
+}
+.user_list{
+  padding: 32px;
+}
+.css-1ygcj2i-MuiTableCell-root , .css-1ex1afd-MuiTableCell-root {
+  text-align: center !important;
+}
+.buttons{
+  display: flex;
+  justify-content: space-evenly;
+}
+.modal-form{
+  text-align: center;
+}
+.form-field.mo-btn-grp {
+  display: flex;
+  justify-content: space-evenly;
 }
