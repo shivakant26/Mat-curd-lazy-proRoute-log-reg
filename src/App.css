@@ -67,7 +67,7 @@ a{
 .css-1ygcj2i-MuiTableCell-root , .css-1ex1afd-MuiTableCell-root {
   text-align: center !important;
 }
-.buttons{
+td.MuiTableCell-root.MuiTableCell-body.MuiTableCell-sizeMedium.buttons.css-1ex1afd-MuiTableCell-root {
   display: flex;
   justify-content: space-evenly;
 }
@@ -77,4 +77,11 @@ a{
 .form-field.mo-btn-grp {
   display: flex;
   justify-content: space-evenly;
+}
+.search-bar{
+  text-align: left;
+}
+input[type="search"]{
+  padding: 12px 20px;
+  margin-top:15px ;
 }

@@ -1,4 +1,4 @@
-import { DELETE, EDIT, LOGIN, REGISTER, UPDATE } from "../actionType";
+import { DELETE, EDIT, LOGIN, LOGOUT, REGISTER, UPDATE } from "../actionType";
 
 export const RegsiterUser = (data) =>{
     return{
@@ -33,5 +33,11 @@ export const updateUser = (data,id) =>{
         type:UPDATE,
         payload:data,
         id:id
+    }
+}
+
+export const LogOut = () =>{
+    return{
+        type:LOGOUT,
     }
 }

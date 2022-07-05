@@ -2,6 +2,7 @@ import React from "react";
 import Box from '@mui/material/Box';
 import { Button } from "@mui/material";
 import { useNavigate } from "react-router-dom";
+
 const PageNotFound = () =>{
     const navigate = useNavigate();
     const back = () =>{
@@ -16,8 +17,6 @@ const PageNotFound = () =>{
             <Button onClick={back}>Go Back Home</Button>
         </Box>
         </>
-        
-            
     )
 }
 

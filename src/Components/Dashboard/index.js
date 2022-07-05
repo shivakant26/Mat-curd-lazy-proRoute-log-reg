@@ -7,11 +7,13 @@ import Button from '@mui/material/Button';
 import { Grid } from "@mui/material";
 import { Outlet, useNavigate } from 'react-router-dom'
 import Sidebar from "../Sidebar";
+import { useDispatch } from "react-redux";
+import { LogOut } from "../../Services/Redux/Action/userAction";
 const Dashboard = () => {
+const dispatch = useDispatch();
 const navigate = useNavigate();
 const Logout = () =>{
-    localStorage.removeItem("login-token");
-    navigate("/");
+    dispatch(LogOut())
 }
     return (
         <>

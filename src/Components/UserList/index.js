@@ -1,5 +1,5 @@
 import { Box } from "@mui/system";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
@@ -15,6 +15,7 @@ import { Button } from "@mui/material";
 import { DeleteUser, editUser, updateUser } from "../../Services/Redux/Action/userAction";
 import { useForm } from "react-hook-form";
 import TextField from "@mui/material/TextField";
+import { toast } from "react-toastify";
 
 const style = {
   position: "absolute",
@@ -35,26 +36,28 @@ const UserList = () => {
     setValue, 
     formState: { errors },
   } = useForm();
-  const [open, setOpen] = React.useState(false);
+  
+  const [open, setOpen] = useState(false);
+  const [search , setSearch ] = useState("");
   const handleClose = () => setOpen(false);
   const dispatch = useDispatch();
   const allUser = useSelector((state) => state?.userReaducer);
   let id = allUser?.id;
-  console.log("data", allUser);
+  // console.log("data", allUser);
+
   // edit user action
   const edit_User = (id) => {
     dispatch(editUser(id))
     setOpen(true)
-    if(allUser?.message){
-      alert(`${allUser?.message}`);
-      setOpen(false);
-    }
-    
   };
+
+  // search method
+  
+
   // delete function
   const deleteUser = (id) => {
     var result = window.confirm("Want to delete?");
-    if (result == true) {
+    if (result === true) {
       dispatch(DeleteUser(id));
     } else {
       return false;
@@ -64,11 +67,17 @@ const UserList = () => {
   // update function
   const onSubmit = (data) => {
     dispatch(updateUser(data,id))
+    if(allUser?.message){
+      toast.success(`${allUser?.message}`,
+        {position: toast.POSITION.TOP_RIGHT})
+      setOpen(false);
+    }
   }
   // for cancel button
   const cancel = () =>{
     setOpen(false);
   }
+
   useEffect(()=>{
     if(allUser?.isEdit){
       console.log("value",allUser?.isEdit)
@@ -77,13 +86,16 @@ const UserList = () => {
       setValue('password', allUser?.isEdit?.password)
       setValue('phone', allUser?.isEdit?.phone)
     }
-  },[allUser?.isEdit])
+  },[allUser])
   return (
     <>
       <Box>
+        <div className="search-bar">
+        <input id="search" type="search" placeholder="search" onChange={(e)=>setSearch(e.target.value)} />
+        </div>
         <div className="user_list">
           <TableContainer component={Paper}>
-            <Table sx={{ minWidth: 650 }} aria-label="simple table">
+            <Table sx={{ minWidth: 650 }} aria-label="simple table" >
               <TableHead>
                 <TableRow>
                   <TableCell>Name</TableCell>
@@ -94,7 +106,18 @@ const UserList = () => {
                 </TableRow>
               </TableHead>
               <TableBody>
-                {allUser?.register_User?.map((item, index) => (
+                {allUser?.register_User?.filter((post) => {
+                if (search === "") {
+                  return post;
+                } else if (
+                  post.name.toLowerCase().includes(search.toLowerCase()) ||
+                  post.email.toLowerCase().includes(search.toLowerCase()) ||
+                  post.password.toLowerCase().includes(search.toLowerCase()) ||
+                  post.phone.toLowerCase().includes(search.toLowerCase())
+                ) {
+                  return post;
+                }
+              }).map((item, index) => (
                   <TableRow
                     sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
                     key={index}

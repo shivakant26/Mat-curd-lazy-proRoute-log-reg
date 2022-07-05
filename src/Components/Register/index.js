@@ -5,6 +5,7 @@ import { useForm } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
 import { RegsiterUser } from "../../Services/Redux/Action/userAction";
 import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 
 const Register = () => {
   const {
@@ -18,21 +19,25 @@ const Register = () => {
   const getuser = useSelector((state) => state?.userReaducer);
   console.log(32132132, getuser);
 
+// register user here
   const onSubmit = (data) => {
     let list = JSON.parse(localStorage.getItem("registerUser")) || [],
        isExist = list.findIndex((obj) => {
           return obj.email === data.email
         }) != -1;
     if (isExist) {
-      alert("Email Already be taken")
+      toast.error("Email Already be taken",
+        {position: toast.POSITION.TOP_RIGHT})
     } else {
         dispatch(RegsiterUser(data))
     }
     reset();
   };
+  // set response who comes from redux-saga
   useEffect(() => {
     if (getuser?.status === 201) {
-      alert(`${getuser?.message}`);
+      toast.success(`${getuser?.message}`,
+        {position: toast.POSITION.TOP_RIGHT})
       navigate("/");
     }
   }, [getuser]);

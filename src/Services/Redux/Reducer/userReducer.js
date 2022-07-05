@@ -1,9 +1,11 @@
-import { DELETE_SUCCESS, EDIT_SUCCESS, LOGIN_SUCCESS, REGISTER_SUCCESS, UPDATE_SUCCESS } from "../actionType";
+import { DELETE_SUCCESS, EDIT_SUCCESS, LOGIN_SUCCESS, LOGOUT_SUCCESS, REGISTER_SUCCESS, UPDATE_SUCCESS } from "../actionType";
 
 const initialState = {
   register_User: localStorage.getItem("registerUser")
     ? JSON.parse(localStorage.getItem("registerUser"))
     : [],
+    isAuth: localStorage.getItem("login-token") ?  localStorage.getItem("login-token") : false
+    
 };
 
 const userReaducer = (state = initialState, action) => {
@@ -24,7 +26,7 @@ const userReaducer = (state = initialState, action) => {
     case LOGIN_SUCCESS:
       var token, status, message;
       const reg_user_list = JSON.parse(localStorage.getItem("registerUser"));
-      reg_user_list.forEach((element) => {
+      reg_user_list?.forEach((element) => {
         if (element.email === action.payload.email && element.password === action.payload.password) {
           token = "weewerwr344efsd.ertertert54dfgdt45.trergsdfwer";
           localStorage.setItem("login-token", JSON.stringify(token));
@@ -34,6 +36,7 @@ const userReaducer = (state = initialState, action) => {
       });
       return {
         ...state,
+        isAuth:token,
         status: status === true ? 200 : 400,
         token: token === token ? token : null,
         message: message === true ? "Login Successfull" : "Invalid Credential",
@@ -55,6 +58,13 @@ const userReaducer = (state = initialState, action) => {
           ...state,
           isEdit:object,
           id:action.payload 
+        }
+        // Logout user
+        case LOGOUT_SUCCESS :
+        localStorage.removeItem('login-token')
+        return{
+          ...state,
+          isAuth:false 
         }
         // Update user case
         case UPDATE_SUCCESS :

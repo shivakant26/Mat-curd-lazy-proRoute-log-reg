@@ -1,4 +1,4 @@
-import { DELETE, DELETE_SUCCESS, EDIT, EDIT_SUCCESS, LOGIN, LOGIN_SUCCESS, REGISTER, REGISTER_SUCCESS, UPDATE, UPDATE_SUCCESS } from "../actionType";
+import { DELETE, DELETE_SUCCESS, EDIT, EDIT_SUCCESS, LOGIN, LOGIN_SUCCESS, LOGOUT, LOGOUT_SUCCESS, REGISTER, REGISTER_SUCCESS, UPDATE, UPDATE_SUCCESS } from "../actionType";
 import { takeEvery , put} from "redux-saga/effects";
 
 function * userRegister(action){
@@ -37,10 +37,18 @@ function * update_User(action){
     })
 }
 
+
+function * Logout_User(){
+    yield put({
+        type:LOGOUT_SUCCESS,
+    })
+}
+
 export function* userSaga(){
     yield takeEvery(REGISTER,userRegister)
     yield takeEvery(LOGIN,userLogin)
     yield takeEvery(DELETE,delete_User)
     yield takeEvery(EDIT,edit_User)
     yield takeEvery(UPDATE,update_User)
+    yield takeEvery(LOGOUT,Logout_User)
 }
