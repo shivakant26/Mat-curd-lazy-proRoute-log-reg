@@ -102,4 +102,7 @@ input[type="search"]{
     max-width: 100%;
     text-align: center;
   }
+  .form {
+    width: 250px;
+}
 }
