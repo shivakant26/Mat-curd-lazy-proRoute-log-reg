@@ -106,6 +106,6 @@ input[type="search"]{
     width: 250px;
 }
 .error{
-  margin-left: 23px;
+  left: 23px;
 }
 }
