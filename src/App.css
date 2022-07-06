@@ -105,4 +105,7 @@ input[type="search"]{
   .form {
     width: 250px;
 }
+.error{
+  margin-left: 23px;
+}
 }
