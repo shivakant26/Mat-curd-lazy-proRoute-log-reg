@@ -24,7 +24,7 @@ const Register = () => {
     let list = JSON.parse(localStorage.getItem("registerUser")) || [],
        isExist = list.findIndex((obj) => {
           return obj.email === data.email
-        }) != -1;
+        }) !== -1;
     if (isExist) {
       toast.error("Email Already be taken",
         {position: toast.POSITION.TOP_RIGHT})
@@ -59,7 +59,7 @@ const Register = () => {
             />
             {errors?.name?.type === "required" && (
               <p className="error">name is required*</p>
-            )}
+            )} 
           </div>
           <div className="form-field">
             <TextField

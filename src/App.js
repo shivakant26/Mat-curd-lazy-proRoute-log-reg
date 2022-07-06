@@ -26,11 +26,11 @@ function App() {
   const isAuth = useSelector((state) => state?.userReaducer?.isAuth);
 
   useEffect(() => {
-    if (isAuth && pathname == "/") {
+    if (isAuth && pathname === "/") {
       navigate("/dashboard");
-    } else if(!isAuth && pathname == "/dashboard") {
+    } else if(!isAuth && pathname === "/dashboard") {
       navigate('/');
-    }else if(!isAuth && pathname == "/dashboard/userlist") {
+    }else if(!isAuth && pathname === "/dashboard/userlist") {
       navigate('/');
     }
     else{
