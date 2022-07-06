@@ -13,8 +13,8 @@ import UserList from "./Components/UserList";
 import Profile from "./Components/Profile";
 import CircularProgress from "@mui/material/CircularProgress";
 import Box from "@mui/material/Box";
-import { useDispatch, useSelector } from "react-redux";
-import { toast, ToastContainer } from "react-toastify";
+import {  useSelector } from "react-redux";
+import { ToastContainer } from "react-toastify";
 
 const Login = React.lazy(() => import("./Components/Login/index"));
 const Register = React.lazy(() => import("./Components/Register/index"));

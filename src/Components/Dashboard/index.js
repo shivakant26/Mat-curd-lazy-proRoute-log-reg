@@ -28,6 +28,7 @@ const Logout = () =>{
                         </Typography>
                     </Toolbar>
                 </AppBar>
+                <div className="box-container">
                 <Grid container spacing={2}>
                     <Grid item xs={3}>
                         <Sidebar />
@@ -35,7 +36,8 @@ const Logout = () =>{
                     <Grid item xs={9}>
                         <Outlet />
                     </Grid>
-                </Grid>
+                    </Grid>
+                </div>
             </Box>
         </>
     )

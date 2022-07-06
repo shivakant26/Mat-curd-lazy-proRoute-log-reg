@@ -6,7 +6,7 @@ import { LoginUser } from "../../Services/Redux/Action/userAction";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import {toast} from 'react-toastify';
-
+import { ToastContainer } from "react-toastify";
 const Login = () => {
   const {
     register,
@@ -22,6 +22,7 @@ const Login = () => {
   const onSubmit = (data) => {
     dispatch(LoginUser(data));
     if (login_response?.status === 200) {
+      <ToastContainer />
       toast.success(`${login_response?.message}`,
       {position: toast.POSITION.TOP_RIGHT})
 }
@@ -38,8 +39,7 @@ const Login = () => {
   }, [login_response]);
   
   return (
-    <div className="login-form">
-      
+    <div className="login-form">  
       <div className="form">
         <div className="form-heading">
           <h4>Login...</h4>

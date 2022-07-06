@@ -47,7 +47,7 @@ const UserList = () => {
   const dispatch = useDispatch();
   const allUser = useSelector((state) => state?.userReaducer);
   let id = allUser?.id;
-  // console.log("data", allUser);
+
 
   // edit user action
   const edit_User = (id) => {

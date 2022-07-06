@@ -86,3 +86,20 @@ input[type="search"]{
   padding: 12px 20px;
   margin:15px 10px;
 }
+
+@media only screen and (max-width: 768px) {
+  input[type=search] {
+    width: 80%;
+}
+.MuiGrid-root.MuiGrid-item.MuiGrid-grid-xs-9.css-1qpzhgb-MuiGrid-root {
+  max-width: 100%;
+  flex-direction: column;
+  display: flex;
+}
+}
+@media only screen and (max-width: 480px) {
+  .MuiGrid-root.MuiGrid-item.MuiGrid-grid-xs-3.css-1equabv-MuiGrid-root{
+    max-width: 100%;
+    text-align: center;
+  }
+}
