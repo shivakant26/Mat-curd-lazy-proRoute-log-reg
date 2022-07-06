@@ -79,7 +79,9 @@ const userReaducer = (state = initialState, action) => {
           localStorage.setItem("registerUser",JSON.stringify(Update_userlist))
           return{
             ...state,
-            isEdit:"",
+            status:false,
+            isEdit:false,
+            register_User:[...Update_userlist],
             message:"Record Update Successfully"
           }
     default:

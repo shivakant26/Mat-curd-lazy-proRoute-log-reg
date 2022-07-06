@@ -12,7 +12,11 @@ import { useDispatch, useSelector } from "react-redux";
 import EditLocationAltIcon from "@mui/icons-material/EditLocationAlt";
 import DeleteIcon from "@mui/icons-material/Delete";
 import { Button } from "@mui/material";
-import { DeleteUser, editUser, updateUser } from "../../Services/Redux/Action/userAction";
+import {
+  DeleteUser,
+  editUser,
+  updateUser,
+} from "../../Services/Redux/Action/userAction";
 import { useForm } from "react-hook-form";
 import TextField from "@mui/material/TextField";
 import { toast } from "react-toastify";
@@ -33,12 +37,12 @@ const UserList = () => {
   const {
     register,
     handleSubmit,
-    setValue, 
+    setValue,
     formState: { errors },
   } = useForm();
-  
+
   const [open, setOpen] = useState(false);
-  const [search , setSearch ] = useState("");
+  const [search, setSearch] = useState("");
   const handleClose = () => setOpen(false);
   const dispatch = useDispatch();
   const allUser = useSelector((state) => state?.userReaducer);
@@ -47,12 +51,11 @@ const UserList = () => {
 
   // edit user action
   const edit_User = (id) => {
-    dispatch(editUser(id))
-    setOpen(true)
+    dispatch(editUser(id));
+    setOpen(true);
   };
 
   // search method
-  
 
   // delete function
   const deleteUser = (id) => {
@@ -66,36 +69,47 @@ const UserList = () => {
 
   // update function
   const onSubmit = (data) => {
-    dispatch(updateUser(data,id))
-    if(allUser?.message){
-      toast.success(`${allUser?.message}`,
-        {position: toast.POSITION.TOP_RIGHT})
-      setOpen(false);
+    if(data){
+      dispatch(updateUser(data, id));
     }
-  }
+    
+  };
   // for cancel button
-  const cancel = () =>{
+  const cancel = () => {
     setOpen(false);
-  }
+  };
 
-  useEffect(()=>{
-    if(allUser?.isEdit){
-      console.log("value",allUser?.isEdit)
-      setValue('name', allUser?.isEdit?.name)
-      setValue('email', allUser?.isEdit?.email)
-      setValue('password', allUser?.isEdit?.password)
-      setValue('phone', allUser?.isEdit?.phone)
+  useEffect(() => {
+    if (allUser?.isEdit) {
+      console.log("value", allUser?.isEdit);
+      setValue("name", allUser?.isEdit?.name);
+      setValue("email", allUser?.isEdit?.email);
+      setValue("password", allUser?.isEdit?.password);
+      setValue("phone", allUser?.isEdit?.phone);
     }
-  },[allUser])
+    if (allUser?.message) {
+      toast.success(`${allUser?.message}`, {
+        position: toast.POSITION.TOP_RIGHT,
+      });
+      setOpen(false);
+    }else{
+
+    }
+  }, [allUser?.isEdit]);
   return (
     <>
       <Box>
-        <div className="search-bar">
-        <input id="search" type="search" placeholder="search" onChange={(e)=>setSearch(e.target.value)} />
-        </div>
         <div className="user_list">
+          <div className="search-bar">
+            <input
+              id="search"
+              type="search"
+              placeholder="search"
+              onChange={(e) => setSearch(e.target.value)}
+            />
+          </div>
           <TableContainer component={Paper}>
-            <Table sx={{ minWidth: 650 }} aria-label="simple table" >
+            <Table sx={{ minWidth: 650 }} aria-label="simple table">
               <TableHead>
                 <TableRow>
                   <TableCell>Name</TableCell>
@@ -106,44 +120,48 @@ const UserList = () => {
                 </TableRow>
               </TableHead>
               <TableBody>
-                {allUser?.register_User?.filter((post) => {
-                if (search === "") {
-                  return post;
-                } else if (
-                  post.name.toLowerCase().includes(search.toLowerCase()) ||
-                  post.email.toLowerCase().includes(search.toLowerCase()) ||
-                  post.password.toLowerCase().includes(search.toLowerCase()) ||
-                  post.phone.toLowerCase().includes(search.toLowerCase())
-                ) {
-                  return post;
-                }
-              }).map((item, index) => (
-                  <TableRow
-                    sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
-                    key={index}
-                  >
-                    <TableCell>{item.name}</TableCell>
-                    <TableCell>{item.email}</TableCell>
-                    <TableCell>{item.password}</TableCell>
-                    <TableCell>{item.phone}</TableCell>
-                    <TableCell className="buttons">
-                      <Button
-                        variant="contained"
-                        color="success"
-                        onClick={() => edit_User(index)}
-                      >
-                        <EditLocationAltIcon />
-                      </Button>
-                      <Button
-                        variant="contained"
-                        color="secondary"
-                        onClick={() => deleteUser(index)}
-                      >
-                        <DeleteIcon />
-                      </Button>
-                    </TableCell>
-                  </TableRow>
-                ))}
+                {allUser?.register_User
+                  ?.filter((post) => {
+                    if (search === "") {
+                      return post;
+                    } else if (
+                      post.name.toLowerCase().includes(search.toLowerCase()) ||
+                      post.email.toLowerCase().includes(search.toLowerCase()) ||
+                      post.password
+                        .toLowerCase()
+                        .includes(search.toLowerCase()) ||
+                      post.phone.toLowerCase().includes(search.toLowerCase())
+                    ) {
+                      return post;
+                    }
+                  })
+                  .map((item, index) => (
+                    <TableRow
+                      sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
+                      key={index}
+                    >
+                      <TableCell>{item.name}</TableCell>
+                      <TableCell>{item.email}</TableCell>
+                      <TableCell>{item.password}</TableCell>
+                      <TableCell>{item.phone}</TableCell>
+                      <TableCell className="buttons">
+                        <Button
+                          variant="contained"
+                          color="success"
+                          onClick={() => edit_User(index)}
+                        >
+                          <EditLocationAltIcon />
+                        </Button>
+                        <Button
+                          variant="contained"
+                          color="secondary"
+                          onClick={() => deleteUser(index)}
+                        >
+                          <DeleteIcon />
+                        </Button>
+                      </TableCell>
+                    </TableRow>
+                  ))}
               </TableBody>
             </Table>
           </TableContainer>
@@ -158,48 +176,64 @@ const UserList = () => {
           >
             <Box sx={style}>
               <div className="modal-form">
-              <form onSubmit={handleSubmit(onSubmit)}>
-                <div className="form-field">
-                  <TextField
-                    id="outlined-basic"
-                    label="Name"
-                    variant="outlined"
-                    {...register('name')}
-                  />
-                </div>
-                <div className="form-field">
-                  <TextField
-                    id="outlined-basic"
-                    label="Email"
-                    variant="outlined"
-                    {...register('email')}
-                  />
-                </div>
-                <div className="form-field">
-                  <TextField
-                    id="outlined-basic"
-                    label="Password"
-                    variant="outlined"
-                    {...register('password')}
-                  />
-                </div>
-                <div className="form-field">
-                  <TextField
-                    id="outlined-basic"
-                    label="phone"
-                    variant="outlined"
-                    {...register('phone')}
-                  />
-                </div>
-                <div className="form-field mo-btn-grp">
-                  <Button variant="contained" type="submit">
-                    Update
-                  </Button>
-                  <Button variant="contained" color="secondary" onClick={cancel}>
-                    Cancel
-                  </Button>
-                </div>
-              </form>
+                <form onSubmit={handleSubmit(onSubmit)}>
+                  <div className="form-field">
+                    <TextField
+                      id="outlined-basic"
+                      label="Name"
+                      variant="outlined"
+                      {...register("name")}
+                    />
+                    {errors?.name?.type === "required" && (
+                      <p className="error">name is required*</p>
+                    )}
+                  </div>
+                  <div className="form-field">
+                    <TextField
+                      id="outlined-basic"
+                      label="Email"
+                      variant="outlined"
+                      {...register("email")}
+                    />
+                    {errors?.email?.type === "required" && (
+                      <p className="error">name is required*</p>
+                    )}
+                  </div>
+                  <div className="form-field">
+                    <TextField
+                      id="outlined-basic"
+                      label="Password"
+                      variant="outlined"
+                      {...register("password")}
+                    />
+                    {errors?.password?.type === "required" && (
+                      <p className="error">name is required*</p>
+                    )}
+                  </div>
+                  <div className="form-field">
+                    <TextField
+                      id="outlined-basic"
+                      label="phone"
+                      variant="outlined"
+                      {...register("phone")}
+                    />
+                    {errors?.phone?.type === "required" && (
+                      <p className="error">name is required*</p>
+                    )}
+                  </div>
+                  <div className="form-field mo-btn-grp">
+                    <Button variant="contained" type="submit">
+                      Update
+                    </Button>
+                    <Button
+                      variant="contained"
+                      color="secondary"
+                      onClick={cancel}
+                    >
+                      Cancel
+                    </Button>
+                  </div>
+                </form>
               </div>
             </Box>
           </Modal>

@@ -80,8 +80,9 @@ td.MuiTableCell-root.MuiTableCell-body.MuiTableCell-sizeMedium.buttons.css-1ex1a
 }
 .search-bar{
   text-align: left;
+  background-color: black;
 }
 input[type="search"]{
   padding: 12px 20px;
-  margin-top:15px ;
+  margin:15px 10px;
 }

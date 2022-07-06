@@ -14,13 +14,13 @@ import Profile from "./Components/Profile";
 import CircularProgress from "@mui/material/CircularProgress";
 import Box from "@mui/material/Box";
 import { useDispatch, useSelector } from "react-redux";
-import { ToastContainer } from "react-toastify";
+import { toast, ToastContainer } from "react-toastify";
+
 const Login = React.lazy(() => import("./Components/Login/index"));
 const Register = React.lazy(() => import("./Components/Register/index"));
 const Dashboard = React.lazy(() => import("./Components/Dashboard/index"));
-
 function App() {
-  let token = localStorage.getItem("login-token");
+
   const navigate = useNavigate();
   const { pathname } = useLocation();
   const isAuth = useSelector((state) => state?.userReaducer?.isAuth);
@@ -30,6 +30,8 @@ function App() {
       navigate("/dashboard");
     } else if(!isAuth && pathname == "/dashboard") {
       navigate('/');
+    }else if(!isAuth && pathname == "/dashboard/userlist") {
+      navigate('/');
     }
     else{
       navigate(pathname);
@@ -38,7 +40,7 @@ function App() {
 
   return (
     <div className="App">
-      <ToastContainer />
+      
       {/* <Router> */}
       <Suspense
         fallback={
@@ -53,6 +55,7 @@ function App() {
               <CircularProgress />
             </Box>
           </div>
+          
         }
       >
         <Routes>
