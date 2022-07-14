@@ -41,13 +41,18 @@ const UserList = () => {
     formState: { errors },
   } = useForm();
 
-  const [open, setOpen] = useState(false);
-  const [search, setSearch] = useState("");
+  const [ open, setOpen ] = useState(false);
+  const [ search, setSearch ] = useState("");
+  const [ record , setRecord ] = useState({
+    email:""
+  }); 
   const handleClose = () => setOpen(false);
   const dispatch = useDispatch();
   const allUser = useSelector((state) => state?.userReaducer);
   let id = allUser?.id;
 
+  const item = JSON.parse(localStorage.getItem("currentUser"))
+  console.log(123123,item)
 
   // edit user action
   const edit_User = (id) => {
@@ -79,6 +84,14 @@ const UserList = () => {
     setOpen(false);
   };
 
+useEffect(()=>{
+ item?.filter((e)=>{
+    setRecord({
+      email:e.email
+    })
+  })
+},[])
+  // for set message and bind value with model
   useEffect(() => {
     if (allUser?.isEdit) {
       console.log("value", allUser?.isEdit);
@@ -93,7 +106,6 @@ const UserList = () => {
       });
       setOpen(false);
     }else{
-
     }
   }, [allUser?.isEdit]);
   return (
@@ -116,20 +128,22 @@ const UserList = () => {
                   <TableCell>Email</TableCell>
                   <TableCell>Password</TableCell>
                   <TableCell>Phone</TableCell>
+                  <TableCell>Roll</TableCell>
                   <TableCell>Action</TableCell>
                 </TableRow>
               </TableHead>
               <TableBody>
                 {allUser?.register_User
                   ?.filter((post) => {
+                    if(post?.email === record?.email){
+                      return false
+                    }
                     if (search === "") {
                       return post;
                     } else if (
                       post.name.toLowerCase().includes(search.toLowerCase()) ||
                       post.email.toLowerCase().includes(search.toLowerCase()) ||
-                      post.password
-                        .toLowerCase()
-                        .includes(search.toLowerCase()) ||
+                      post.password.toLowerCase().includes(search.toLowerCase()) ||
                       post.phone.toLowerCase().includes(search.toLowerCase())
                     ) {
                       return post;
@@ -144,6 +158,7 @@ const UserList = () => {
                       <TableCell>{item.email}</TableCell>
                       <TableCell>{item.password}</TableCell>
                       <TableCell>{item.phone}</TableCell>
+                      <TableCell>{item.role}</TableCell>
                       <TableCell className="buttons">
                         <Button
                           variant="contained"

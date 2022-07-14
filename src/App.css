@@ -110,3 +110,14 @@ input[type="search"]{
   width: 200px;
 }
 }
+
+.css-1sumxir-MuiFormLabel-root-MuiInputLabel-root {
+  left: 18px;
+}
+.MuiOutlinedInput-root.MuiInputBase-root.MuiInputBase-colorPrimary.MuiInputBase-formControl.css-1yk1gt9-MuiInputBase-root-MuiOutlinedInput-root-MuiSelect-root {
+width: 213px;
+margin: 0 auto;
+}
+label#demo-simple-select-label {
+  left: 91px;
+}

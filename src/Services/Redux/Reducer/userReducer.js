@@ -4,8 +4,8 @@ const initialState = {
   register_User: localStorage.getItem("registerUser")
     ? JSON.parse(localStorage.getItem("registerUser"))
     : [],
-    isAuth: localStorage.getItem("login-token") ?  localStorage.getItem("login-token") : false
-    
+    isAuth: localStorage.getItem("login-token") ?  localStorage.getItem("login-token") : false,
+    login_user : []
 };
 
 const userReaducer = (state = initialState, action) => {
@@ -26,6 +26,7 @@ const userReaducer = (state = initialState, action) => {
     case LOGIN_SUCCESS:
       var token, status, message;
       const reg_user_list = JSON.parse(localStorage.getItem("registerUser"));
+      let login_Data = state.login_user;
       reg_user_list?.forEach((element) => {
         if (element.email === action.payload.email && element.password === action.payload.password) {
           token = "weewerwr344efsd.ertertert54dfgdt45.trergsdfwer";
@@ -34,6 +35,9 @@ const userReaducer = (state = initialState, action) => {
           message = true;
         }
       });
+      login_Data.push(action.payload);
+      localStorage.setItem("currentUser",JSON.stringify(login_Data))
+   
       return {
         ...state,
         isAuth:token,
@@ -61,7 +65,8 @@ const userReaducer = (state = initialState, action) => {
         }
         // Logout user
         case LOGOUT_SUCCESS :
-        localStorage.removeItem('login-token')
+        localStorage.removeItem('login-token');
+        localStorage.removeItem('currentUser');
         return{
           ...state,
           isAuth:false 

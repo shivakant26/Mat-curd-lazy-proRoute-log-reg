@@ -6,6 +6,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { RegsiterUser } from "../../Services/Redux/Action/userAction";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
+import Checkbox from "@mui/material/Checkbox";
+import { FormControl, InputLabel, MenuItem, Select } from "@mui/material";
 
 const Register = () => {
   const {
@@ -19,25 +21,28 @@ const Register = () => {
   const getuser = useSelector((state) => state?.userReaducer);
   console.log(32132132, getuser);
 
-// register user here
+  // register user here
   const onSubmit = (data) => {
     let list = JSON.parse(localStorage.getItem("registerUser")) || [],
-       isExist = list.findIndex((obj) => {
-          return obj.email === data.email
+      isExist =
+        list.findIndex((obj) => {
+          return obj.email === data.email;
         }) !== -1;
     if (isExist) {
-      toast.error("Email Already be taken",
-        {position: toast.POSITION.TOP_RIGHT})
+      toast.error("Email Already be taken", {
+        position: toast.POSITION.TOP_RIGHT,
+      });
     } else {
-        dispatch(RegsiterUser(data))
+      dispatch(RegsiterUser(data));
     }
     reset();
   };
   // set response who comes from redux-saga
   useEffect(() => {
     if (getuser?.status === 201) {
-      toast.success(`${getuser?.message}`,
-        {position: toast.POSITION.TOP_RIGHT})
+      toast.success(`${getuser?.message}`, {
+        position: toast.POSITION.TOP_RIGHT,
+      });
       navigate("/");
     }
   }, [getuser]);
@@ -59,7 +64,7 @@ const Register = () => {
             />
             {errors?.name?.type === "required" && (
               <p className="error">name is required*</p>
-            )} 
+            )}
           </div>
           <div className="form-field">
             <TextField
@@ -98,6 +103,26 @@ const Register = () => {
             />
             {errors?.phone?.type === "required" && (
               <p className="error">phone is required*</p>
+            )}
+          </div>
+          <div className="form-field">
+            <FormControl fullWidth>
+              <InputLabel id="demo-simple-select-label">Role</InputLabel>
+              <Select
+                labelId="demo-simple-select-label"
+                id="demo-simple-select"
+                // value={age}
+                label="Role"
+                {...register("role", {
+                  required: true,
+                })}
+              >
+                <MenuItem value="user">User</MenuItem>
+                <MenuItem value="admin">Admin</MenuItem>
+              </Select>
+            </FormControl>
+            {errors?.role?.type === "required" && (
+              <p className="error">role is required*</p>
             )}
           </div>
           <div className="form-field">
