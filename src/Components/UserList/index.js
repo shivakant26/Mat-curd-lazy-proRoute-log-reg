@@ -11,7 +11,7 @@ import Paper from "@mui/material/Paper";
 import { useDispatch, useSelector } from "react-redux";
 import EditLocationAltIcon from "@mui/icons-material/EditLocationAlt";
 import DeleteIcon from "@mui/icons-material/Delete";
-import { Button } from "@mui/material";
+import { Button, FormControl, InputLabel, MenuItem, Select } from "@mui/material";
 import {
   DeleteUser,
   editUser,
@@ -19,7 +19,6 @@ import {
 } from "../../Services/Redux/Action/userAction";
 import { useForm } from "react-hook-form";
 import TextField from "@mui/material/TextField";
-import { toast } from "react-toastify";
 
 const style = {
   position: "absolute",
@@ -41,17 +40,15 @@ const UserList = () => {
     formState: { errors },
   } = useForm();
 
-  const [ open, setOpen ] = useState(false);
-  const [ search, setSearch ] = useState("");
-  const [ record , setRecord ] = useState(); 
+  const [open, setOpen] = useState(false);
+  const [search, setSearch] = useState("");
+ 
   const handleClose = () => setOpen(false);
   const dispatch = useDispatch();
-  const allUser = useSelector((state) => state?.userReaducer?.register_User);
+  const allUser = useSelector((state) => state?.userReaducer);
   let id = allUser?.id;
 
-  const login_res = useSelector((state) => state?.userReaducer?.login_user);
-  console.log(11111111,login_res)
-  const Userrole = JSON.parse(localStorage.getItem("currentUser"))
+  const Userrole = JSON.parse(localStorage.getItem("currentUser"));
   // edit user action
   const edit_User = (id) => {
     dispatch(editUser(id));
@@ -69,27 +66,15 @@ const UserList = () => {
 
   // update function
   const onSubmit = (data) => {
-    if(data){
+    if (data) {
       dispatch(updateUser(data, id));
     }
-    
   };
   // for cancel button
   const cancel = () => {
     setOpen(false);
   };
 
-useEffect(()=>{
- const result = allUser?.filter((element)=>{
-  if(element?.email == login_res[0]?.email){
-    return null
-  }else{
-    return element.email
-  }
- })
- setRecord(result)
-},[])
-  // for set message and bind value with model
   useEffect(() => {
     if (allUser?.isEdit) {
       console.log("value", allUser?.isEdit);
@@ -97,13 +82,14 @@ useEffect(()=>{
       setValue("email", allUser?.isEdit?.email);
       setValue("password", allUser?.isEdit?.password);
       setValue("phone", allUser?.isEdit?.phone);
+      setValue("role", allUser?.isEdit?.role);
     }
     if (allUser?.message) {
       alert(`${allUser?.message}`);
       setOpen(false);
-    }else{
+    } else {
     }
-  }, [allUser?.isEdit,login_res]);
+  }, [allUser?.isEdit]);
   return (
     <>
       <Box>
@@ -125,21 +111,24 @@ useEffect(()=>{
                   <TableCell>Password</TableCell>
                   <TableCell>Phone</TableCell>
                   <TableCell>Role</TableCell>
-                  {
-                    Userrole[0].role === "user" ? "" : <TableCell>Action</TableCell>
-                  }
-                  
+                  {Userrole[0].role === "user" ? (
+                    ""
+                  ) : (
+                    <TableCell>Action</TableCell>
+                  )}
                 </TableRow>
               </TableHead>
               <TableBody>
-                {allUser
+                {allUser?.register_User
                   ?.filter((post) => {
                     if (search === "") {
                       return post;
                     } else if (
                       post.name.toLowerCase().includes(search.toLowerCase()) ||
                       post.email.toLowerCase().includes(search.toLowerCase()) ||
-                      post.password.toLowerCase().includes(search.toLowerCase()) ||
+                      post.password
+                        .toLowerCase()
+                        .includes(search.toLowerCase()) ||
                       post.phone.toLowerCase().includes(search.toLowerCase())
                     ) {
                       return post;
@@ -155,25 +144,26 @@ useEffect(()=>{
                       <TableCell>{item.password}</TableCell>
                       <TableCell>{item.phone}</TableCell>
                       <TableCell>{item.role}</TableCell>
-                      {
-                        Userrole[0].role === "user" ? "" : <TableCell className="buttons">
-                        <Button
-                          variant="contained"
-                          color="success"
-                          onClick={() => edit_User(index)}
-                        >
-                          <EditLocationAltIcon />
-                        </Button>
-                        <Button
-                          variant="contained"
-                          color="secondary"
-                          onClick={() => deleteUser(index)}
-                        >
-                          <DeleteIcon />
-                        </Button>
-                      </TableCell>
-                      }
-                      
+                      {Userrole[0].role === "user" ? (
+                        ""
+                      ) : (
+                        <TableCell className="buttons">
+                          <Button
+                            variant="contained"
+                            color="success"
+                            onClick={() => edit_User(index)}
+                          >
+                            <EditLocationAltIcon />
+                          </Button>
+                          <Button
+                            variant="contained"
+                            color="secondary"
+                            onClick={() => deleteUser(index)}
+                          >
+                            <DeleteIcon />
+                          </Button>
+                        </TableCell>
+                      )}
                     </TableRow>
                   ))}
               </TableBody>
@@ -233,6 +223,27 @@ useEffect(()=>{
                     />
                     {errors?.phone?.type === "required" && (
                       <p className="error">name is required*</p>
+                    )}
+                  </div>
+                  <div className="form-field">
+                    <FormControl fullWidth>
+                      <InputLabel id="demo-simple-select-label">
+                        Role
+                      </InputLabel>
+                      <Select
+                        labelId="demo-simple-select-label"
+                        id="demo-simple-select"
+                        label="Role"
+                        {...register("role", {
+                          required: true,
+                        })}
+                      >
+                        <MenuItem value="user">User</MenuItem>
+                        <MenuItem value="admin">Admin</MenuItem>
+                      </Select>
+                    </FormControl>
+                    {errors?.role?.type === "required" && (
+                      <p className="error">role is required*</p>
                     )}
                   </div>
                   <div className="form-field mo-btn-grp">

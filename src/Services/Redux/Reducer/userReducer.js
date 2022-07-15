@@ -79,7 +79,8 @@ const userReaducer = (state = initialState, action) => {
             name:action.payload.name,
             email:action.payload.email,
             password:action.payload.password,
-            phone:action.payload.phone
+            phone:action.payload.phone,
+            role:action.payload.role
           }
           Update_userlist.splice(action.id,1,updatedObject)
           localStorage.setItem("registerUser",JSON.stringify(Update_userlist))
