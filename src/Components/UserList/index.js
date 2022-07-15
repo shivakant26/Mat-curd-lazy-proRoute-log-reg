@@ -43,25 +43,20 @@ const UserList = () => {
 
   const [ open, setOpen ] = useState(false);
   const [ search, setSearch ] = useState("");
-  const [ record , setRecord ] = useState({
-    email:""
-  }); 
+  const [ record , setRecord ] = useState(); 
   const handleClose = () => setOpen(false);
   const dispatch = useDispatch();
-  const allUser = useSelector((state) => state?.userReaducer);
+  const allUser = useSelector((state) => state?.userReaducer?.register_User);
   let id = allUser?.id;
 
-  const item = JSON.parse(localStorage.getItem("currentUser"))
-  console.log(123123,item)
-
+  const login_res = useSelector((state) => state?.userReaducer?.login_user);
+  console.log(11111111,login_res)
+  const Userrole = JSON.parse(localStorage.getItem("currentUser"))
   // edit user action
   const edit_User = (id) => {
     dispatch(editUser(id));
     setOpen(true);
   };
-
-  // search method
-
   // delete function
   const deleteUser = (id) => {
     var result = window.confirm("Want to delete?");
@@ -85,11 +80,14 @@ const UserList = () => {
   };
 
 useEffect(()=>{
- item?.filter((e)=>{
-    setRecord({
-      email:e.email
-    })
-  })
+ const result = allUser?.filter((element)=>{
+  if(element?.email == login_res[0]?.email){
+    return null
+  }else{
+    return element.email
+  }
+ })
+ setRecord(result)
 },[])
   // for set message and bind value with model
   useEffect(() => {
@@ -101,13 +99,11 @@ useEffect(()=>{
       setValue("phone", allUser?.isEdit?.phone);
     }
     if (allUser?.message) {
-      toast.success(`${allUser?.message}`, {
-        position: toast.POSITION.TOP_RIGHT,
-      });
+      alert(`${allUser?.message}`);
       setOpen(false);
     }else{
     }
-  }, [allUser?.isEdit]);
+  }, [allUser?.isEdit,login_res]);
   return (
     <>
       <Box>
@@ -128,16 +124,16 @@ useEffect(()=>{
                   <TableCell>Email</TableCell>
                   <TableCell>Password</TableCell>
                   <TableCell>Phone</TableCell>
-                  <TableCell>Roll</TableCell>
-                  <TableCell>Action</TableCell>
+                  <TableCell>Role</TableCell>
+                  {
+                    Userrole[0].role === "user" ? "" : <TableCell>Action</TableCell>
+                  }
+                  
                 </TableRow>
               </TableHead>
               <TableBody>
-                {allUser?.register_User
+                {allUser
                   ?.filter((post) => {
-                    if(post?.email === record?.email){
-                      return false
-                    }
                     if (search === "") {
                       return post;
                     } else if (
@@ -159,7 +155,8 @@ useEffect(()=>{
                       <TableCell>{item.password}</TableCell>
                       <TableCell>{item.phone}</TableCell>
                       <TableCell>{item.role}</TableCell>
-                      <TableCell className="buttons">
+                      {
+                        Userrole[0].role === "user" ? "" : <TableCell className="buttons">
                         <Button
                           variant="contained"
                           color="success"
@@ -175,6 +172,8 @@ useEffect(()=>{
                           <DeleteIcon />
                         </Button>
                       </TableCell>
+                      }
+                      
                     </TableRow>
                   ))}
               </TableBody>

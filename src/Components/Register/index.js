@@ -29,9 +29,7 @@ const Register = () => {
           return obj.email === data.email;
         }) !== -1;
     if (isExist) {
-      toast.error("Email Already be taken", {
-        position: toast.POSITION.TOP_RIGHT,
-      });
+      alert("Email Already be taken")
     } else {
       dispatch(RegsiterUser(data));
     }
@@ -40,9 +38,7 @@ const Register = () => {
   // set response who comes from redux-saga
   useEffect(() => {
     if (getuser?.status === 201) {
-      toast.success(`${getuser?.message}`, {
-        position: toast.POSITION.TOP_RIGHT,
-      });
+      alert(`${getuser?.message}`)
       navigate("/");
     }
   }, [getuser]);

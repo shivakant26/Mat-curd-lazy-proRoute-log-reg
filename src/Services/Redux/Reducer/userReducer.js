@@ -28,15 +28,16 @@ const userReaducer = (state = initialState, action) => {
       const reg_user_list = JSON.parse(localStorage.getItem("registerUser"));
       let login_Data = state.login_user;
       reg_user_list?.forEach((element) => {
-        if (element.email === action.payload.email && element.password === action.payload.password) {
+        if (element.email === action.payload.email && element.password === action.payload.password && element.role === action.payload.role) {
           token = "weewerwr344efsd.ertertert54dfgdt45.trergsdfwer";
           localStorage.setItem("login-token", JSON.stringify(token));
+          login_Data.push(action.payload);
+          localStorage.setItem("currentUser",JSON.stringify(login_Data))
           status = true;
           message = true;
         }
       });
-      login_Data.push(action.payload);
-      localStorage.setItem("currentUser",JSON.stringify(login_Data))
+      
    
       return {
         ...state,

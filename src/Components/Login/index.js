@@ -6,6 +6,7 @@ import { LoginUser } from "../../Services/Redux/Action/userAction";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import {toast} from 'react-toastify';
+import { FormControl, InputLabel, MenuItem, Select } from "@mui/material";
 const Login = () => {
   const {
     register,
@@ -19,6 +20,7 @@ const Login = () => {
   console.log("loginrespone", login_response?.status);
 
   const onSubmit = (data) => {
+    // data["role"] = "admin"
     dispatch(LoginUser(data));
     if (login_response?.status === 200) {
       alert(`${login_response?.message}`)
@@ -28,8 +30,7 @@ const Login = () => {
 
   useEffect(() => {
     if(login_response?.status === 400){
-        toast.error(`${login_response?.message}`,
-        {position: toast.POSITION.TOP_RIGHT})
+        alert(`${login_response?.message}`)
     }else{
       console.log(null);
     }
@@ -66,6 +67,25 @@ const Login = () => {
             />
             {errors?.email?.type === "required" && (
               <p className="error">password is required*</p>
+            )}
+          </div>
+          <div className="form-field">
+            <FormControl fullWidth>
+              <InputLabel id="demo-simple-select-label">Role</InputLabel>
+              <Select
+                labelId="demo-simple-select-label"
+                id="demo-simple-select"
+                label="Role"
+                {...register("role", {
+                  required: true,
+                })}
+              >
+                <MenuItem value="user">User</MenuItem>
+                <MenuItem value="admin">Admin</MenuItem>
+              </Select>
+            </FormControl>
+            {errors?.role?.type === "required" && (
+              <p className="error">role is required*</p>
             )}
           </div>
           <div className="form-field">
