@@ -85,7 +85,7 @@ const UserList = () => {
       setValue("role", allUser?.isEdit?.role);
     }
     if (allUser?.message) {
-      alert(`${allUser?.message}`);
+      // alert(`${allUser?.message}`);
       setOpen(false);
     } else {
     }

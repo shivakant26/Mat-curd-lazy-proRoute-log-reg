@@ -37,7 +37,6 @@ const userReaducer = (state = initialState, action) => {
           message = true;
         }
       });
-      
    
       return {
         ...state,
