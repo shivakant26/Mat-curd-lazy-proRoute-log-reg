@@ -255,7 +255,7 @@ const UserList = () => {
                       color="secondary"
                       onClick={cancel}
                     >
-                      Cancel
+                      Abort
                     </Button>
                   </div>
                 </form>
