@@ -2,7 +2,10 @@ import React from "react";
 
 const Profile = () =>{
     const data = JSON.parse(localStorage.getItem("currentUser"));
-    console.log("123",data)
+    console.log("123",data);
+    const change = () =>{
+        console.log("under the processs");
+    }
     return(
         <>
         <div className="profile-section">
@@ -17,7 +20,7 @@ const Profile = () =>{
                 <p>role :<span className="dt-right">{data[0].role}</span></p>
                 </div>
                 <div className="profile-btn">
-                    <button className="change-pr">Change Profile</button>
+                    <button className="change-pr" onClick={change}>Change Profile</button>
                 </div>
             </div>
         </div>
